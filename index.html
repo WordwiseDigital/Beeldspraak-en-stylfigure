@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afrikaans FAL: Beeldspraak & Styl</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.2em;
+        }
+
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .lesson-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .example {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-weight: bold;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: #e2e8f0;
+            transform: translateX(5px);
+        }
+
+        .option.correct {
+            background: #c6f6d5;
+            border-color: #38a169;
+        }
+
+        .option.incorrect {
+            background: #fed7d7;
+            border-color: #e53e3e;
+        }
+
+        .game-area {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .drag-drop-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .drag-items, .drop-zones {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 200px;
+        }
+
+        .drag-item {
+            background: #4facfe;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: grab;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .drag-item:hover {
+            background: #3182ce;
+            transform: scale(1.05);
+        }
+
+        .drop-zone {
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            min-height: 50px;
+            background: #f7fafc;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #4facfe;
+            background: #e6fffa;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #744210;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            margin: 10px;
+            perspective: 1000px;
+            display: inline-block;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .mini-text-area {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clickable {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            padding: 3px 6px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 1px;
+        }
+
+        .clickable:hover {
+            background: #e2e8f0;
+            transform: scale(1.02);
+        }
+
+        .clickable.clicked {
+            background: #c6f6d5;
+            border-color: #38a169;
+            color: #2f855a;
+            font-weight: bold;
+        }
+
+        .clickable.revealed {
+            border-color: #4299e1;
+            font-weight: bold;
+        }
+
+        .clickable.revealed[data-type="vergelyking"] {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .clickable.revealed[data-type="metafoor"] {
+            background: #f0fff4;
+            color: #38a169;
+        }
+
+        .clickable.revealed[data-type="personifikasie"] {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .clickable.revealed[data-type="hiperbool"] {
+            background: #fef5e7;
+            color: #d69e2e;
+        }
+
+        .clickable.revealed[data-type="formeel"] {
+            background: #e6fffa;
+            color: #319795;
+        }
+
+        .clickable.revealed[data-type="informeel"] {
+            background: #e6fffa;
+            color: #319795;
+        }
+
+        .practice-instructions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .instruction-item {
+            background: #f7fafc;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .drag-drop-area {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📚 Afrikaans FAL: Beeldspraak & Styl</h1>
+            <p>Interaktiewe Leerapp</p>
+        </header>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="showSection('lessons')">📖 Lesse</button>
+            <button class="nav-btn" onclick="showSection('quiz')">🧠 Toets</button>
+            <button class="nav-btn" onclick="showSection('games')">🎮 Speletjies</button>
+            <button class="nav-btn" onclick="showSection('idioms')">💭 Idiome Kaarte</button>
+            <button class="nav-btn" onclick="showSection('practice')">✍️ Oefen</button>
+        </div>
+
+        <div class="score-display" id="scoreDisplay">
+            Telling: <span id="totalScore">0</span> punte
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <!-- Lessons Section -->
+        <section id="lessons" class="content-section active">
+            <h2>📚 Lesse: Beeldspraak & Styl</h2>
+            
+            <div class="lesson-card">
+                <h3>🔍 Vergelyking</h3>
+                <p>Twee dinge word vergelyk met <strong>soos/nes/soos 'n</strong></p>
+                <div class="example">"Hy is soos 'n tier op die veld."</div>
+                <div class="example">"Sy sing nes 'n leeu wat brul."</div>
+            </div>
+
+            <div class="lesson-card">
+                <h3>🎭 Metafoor</h3>
+                <p>Direkte vergelyking sonder soos/nes; een ding <strong>is</strong> 'n ander</p>
+                <div class="example">"Die skool is 'n doolhof."</div>
+                <div class="example">"Haar woorde is messe."</div>
+            </div>
+
+            <div class="lesson-card">
+                <h3>👤 Personifikasie</h3>
+                <p>Menslike eienskappe aan iets nie-lewend</p>
+                <div class="example">"Die wind fluister deur die bome."</div>
+                <div class="example">"Die son glimlag oor die dorp."</div>
+            </div>
+
+            <div class="lesson-card">
+                <h3>📈 Hiperbool</h3>
+                <p>Oordrywing vir effek/humor</p>
+                <div class="example">"Ek het 'n miljoen take om te doen."</div>
+                <div class="example">"Hy het duisend keer gewaarsku."</div>
+            </div>
+
+            <div class="lesson-card">
+                <h3>🎵 Klankmiddels</h3>
+                <p><strong>Alliterasie:</strong> Herhaling van konsonantklanke</p>
+                <div class="example">"Bure baklei by die baksteenmuur."</div>
+                <p><strong>Assonansie:</strong> Herhaling van vokaalklanke</p>
+                <div class="example">"Die vriendlike kies van liedjes."</div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="content-section">
+            <h2>🧠 Interaktiewe Toets</h2>
+            <div class="quiz-container">
+                <div class="question" id="quizQuestion">Laai...</div>
+                <div class="options" id="quizOptions"></div>
+                <button class="btn" onclick="nextQuestion()">Volgende Vraag</button>
+                <button class="btn" onclick="resetQuiz()">Begin Weer</button>
+            </div>
+            <div id="quizResult"></div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="content-section">
+            <h2>🎮 Interaktiewe Speletjies</h2>
+            
+            <div class="game-area">
+                <h3>🎯 Sleep & Los: Pas die Beeldspraak by die Voorbeeld</h3>
+                <div class="drag-drop-area">
+                    <div class="drag-items">
+                        <h4>Sleep hierdie beeldspraaktipes:</h4>
+                        <div class="drag-item" draggable="true" data-type="vergelyking">Vergelyking</div>
+                        <div class="drag-item" draggable="true" data-type="metafoor">Metafoor</div>
+                        <div class="drag-item" draggable="true" data-type="personifikasie">Personifikasie</div>
+                        <div class="drag-item" draggable="true" data-type="hiperbool">Hiperbool</div>
+                    </div>
+                    <div class="drop-zones">
+                        <h4>Los by die regte voorbeelde:</h4>
+                        <div class="drop-zone" data-answer="vergelyking">"Hy is soos 'n berg"</div>
+                        <div class="drop-zone" data-answer="metafoor">"Die lewe is 'n reis"</div>
+                        <div class="drop-zone" data-answer="personifikasie">"Die wind fluister"</div>
+                        <div class="drop-zone" data-answer="hiperbool">"Ek wag al 'n eeu"</div>
+                    </div>
+                </div>
+                <button class="btn" onclick="checkDragDrop()">Kontroleer Antwoorde</button>
+                <button class="btn" onclick="resetDragDrop()">Begin Weer</button>
+            </div>
+
+            <div class="game-area">
+                <h3>🎪 Klik die Klankmiddels</h3>
+                <p>Klik op die woorde wat alliterasie of assonansie toon:</p>
+                <div class="mini-text-area" id="soundGameText">
+                    <span class="highlight" data-sound="alliterasie">Stad</span> se 
+                    <span class="highlight" data-sound="alliterasie">straat</span> 
+                    <span class="highlight" data-sound="alliterasie">skitter</span>. 
+                    Die <span class="highlight" data-sound="assonansie">vriende</span> 
+                    <span class="highlight" data-sound="assonansie">dien</span> 
+                    <span class="highlight" data-sound="assonansie">dieselfde</span> 
+                    <span class="highlight" data-sound="assonansie">dienste</span>.
+                </div>
+                <button class="btn" onclick="resetSoundGame()">Begin Weer</button>
+            </div>
+        </section>
+
+        <!-- Idioms Cards Section -->
+        <section id="idioms" class="content-section">
+            <h2>💭 Idiome Flip-Kaarte</h2>
+            <p>Hover oor die kaarte om die betekenis te sien!</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div>"Die kat uit die sak laat"</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div>Verklap die geheim</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div>"Skop stof op"</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div>Moeilikheid maak</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div>"Die koue skouer gee"</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div>Iemand ignoreer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div>"Op eiertjies loop"</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div>Baie versigtig wees</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div>"Die bobbejaan agter die bult"</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div>Die ware rede/motief</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div>"Slaan spykers met koppe"</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div>Presies reg wees</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice" class="content-section">
+            <h2>✍️ Oefen met die Mini-teks</h2>
+            
+            <div class="mini-text-area">
+                <h3>Analiseer hierdie teks - Klik op die woorde/frases:</h3>
+                <p id="practiceText">
+                    "Die <span class="clickable" data-type="personifikasie">skoolklok skree my wakker</span>; my WhatsApp-groep 
+                    <span class="clickable" data-type="vergelyking">borrel soos 'n pot sop</span>. 
+                    Ek <span class="clickable" data-type="vergelyking">hardloop soos 'n windhond</span>, want ek het 
+                    <span class="clickable" data-type="hiperbool">'n miljoen dinge</span> om te onthou. 
+                    <span class="clickable" data-type="metafoor">Die gang is 'n doolhof</span>; die 
+                    <span class="clickable" data-type="personifikasie">mure fluister roosters</span>. 
+                    '<span class="clickable" data-type="formeel">Geagte Meneer</span>,' tik ek vinnig—
+                    en daarna: '<span class="clickable" data-type="informeel">Hey, fam, sien julle by die fietsloots!</span>'"
+                </p>
+            </div>
+
+            <div class="quiz-container">
+                <h3>Klik op die teks hierbo om die volgende te identifiseer:</h3>
+                <div class="practice-instructions">
+                    <div class="instruction-item">🔍 <strong>Vergelykings</strong> (met "soos")</div>
+                    <div class="instruction-item">🎭 <strong>Metafore</strong> (direkte vergelyking)</div>
+                    <div class="instruction-item">👤 <strong>Personifikasie</strong> (menslike eienskappe)</div>
+                    <div class="instruction-item">📈 <strong>Hiperbool</strong> (oordrywing)</div>
+                    <div class="instruction-item">📝 <strong>Register</strong> (formeel vs informeel)</div>
+                </div>
+                
+                <div id="practiceScore" style="margin: 15px 0; font-weight: bold; color: #4a5568;">
+                    Gevind: <span id="foundCount">0</span>/8 items
+                </div>
+                
+                <button class="btn" onclick="highlightAnswers()">Wys Alle Antwoorde</button>
+                <button class="btn" onclick="resetPractice()">Begin Weer</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let currentScore = 0;
+        let currentQuestion = 0;
+        let questionsAnswered = 0;
+        let totalQuestions = 10;
+
+        const quizQuestions = [
+            {
+                question: "Watter beeldspraak is dit: 'Die rekenaar is 'n slak vandag.'",
+                options: ["Vergelyking", "Metafoor", "Personifikasie", "Hiperbool"],
+                correct: 1
+            },
+            {
+                question: "Watter beeldspraak is dit: 'Die wind sing deur die gange.'",
+                options: ["Vergelyking", "Metafoor", "Personifikasie", "Hiperbool"],
+                correct: 2
+            },
+            {
+                question: "Watter beeldspraak is dit: 'Hy is soos 'n berg as hy besluit het.'",
+                options: ["Vergelyking", "Metafoor", "Personifikasie", "Hiperbool"],
+                correct: 0
+            },
+            {
+                question: "Watter beeldspraak is dit: 'Ek het 'n see vol trane gehuil.'",
+                options: ["Vergelyking", "Metafoor", "Personifikasie", "Hiperbool"],
+                correct: 3
+            },
+            {
+                question: "Wat beteken die idioom: 'Die kat uit die sak laat'?",
+                options: ["'n Kat bevry", "Verklap die geheim", "Kos maak", "Skoonmaak"],
+                correct: 1
+            },
+            {
+                question: "Watter sin het alliterasie?",
+                options: ["Katte hou van melk", "Ma's maak middagmaaltye", "Die hond slaap"],
+                correct: 1
+            },
+            {
+                question: "Is dit letterlik of figuurlik: 'Die eksamen eet my op.'",
+                options: ["Letterlik", "Figuurlik"],
+                correct: 1
+            },
+            {
+                question: "Watter register is geskik vir 'n WhatsApp-groep met vriende?",
+                options: ["Formeel", "Informeel"],
+                correct: 1
+            },
+            {
+                question: "Watter beeldspraak is dit: 'Haar glimlag is sonlig in die klas.'",
+                options: ["Vergelyking", "Metafoor", "Personifikasie", "Hiperbool"],
+                correct: 1
+            },
+            {
+                question: "Wat beteken: 'Iemand die koue skouer gee'?",
+                options: ["Iemand omhels", "Iemand ignoreer", "Iemand prys"],
+                correct: 1
+            }
+        ];
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function updateScore(points) {
+            currentScore += points;
+            document.getElementById('totalScore').textContent = currentScore;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (questionsAnswered / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Quiz functionality
+        function loadQuestion() {
+            if (currentQuestion < quizQuestions.length) {
+                const question = quizQuestions[currentQuestion];
+                document.getElementById('quizQuestion').textContent = question.question;
+                
+                const optionsContainer = document.getElementById('quizOptions');
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option;
+                    optionDiv.onclick = () => checkAnswer(index);
+                    optionsContainer.appendChild(optionDiv);
+                });
+            } else {
+                document.getElementById('quizQuestion').textContent = 'Toets voltooi! Jou finale telling: ' + currentScore;
+                document.getElementById('quizOptions').innerHTML = '';
+            }
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = quizQuestions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.onclick = null; // Disable further clicks
+            });
+
+            if (selectedIndex === question.correct) {
+                updateScore(10);
+                document.getElementById('quizResult').innerHTML = '<div style="color: green; font-weight: bold; margin: 10px 0;">✓ Korrek! +10 punte</div>';
+            } else {
+                document.getElementById('quizResult').innerHTML = '<div style="color: red; font-weight: bold; margin: 10px 0;">✗ Verkeerd. Probeer weer!</div>';
+            }
+
+            questionsAnswered++;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            document.getElementById('quizResult').innerHTML = '';
+            loadQuestion();
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            questionsAnswered = 0;
+            document.getElementById('quizResult').innerHTML = '';
+            loadQuestion();
+        }
+
+        // Drag and Drop functionality
+        function setupDragDrop() {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.type);
+                    e.target.style.opacity = '0.5';
+                });
+
+                item.addEventListener('dragend', (e) => {
+                    e.target.style.opacity = '1';
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const draggedType = e.dataTransfer.getData('text/plain');
+                    zone.textContent = `${zone.textContent.split(' - ')[0]} - ${draggedType}`;
+                    zone.classList.remove('drag-over');
+                    zone.dataset.dropped = draggedType;
+                });
+            });
+        }
+
+        function checkDragDrop() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            let correct = 0;
+
+            dropZones.forEach(zone => {
+                if (zone.dataset.dropped === zone.dataset.answer) {
+                    zone.style.backgroundColor = '#c6f6d5';
+                    correct++;
+                } else {
+                    zone.style.backgroundColor = '#fed7d7';
+                }
+            });
+
+            updateScore(correct * 5);
+            alert(`Jy het ${correct} uit ${dropZones.length} korrek! +${correct * 5} punte`);
+        }
+
+        function resetDragDrop() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            dropZones.forEach(zone => {
+                const originalText = zone.textContent.split(' - ')[0];
+                zone.textContent = originalText;
+                zone.style.backgroundColor = '#f7fafc';
+                delete zone.dataset.dropped;
+            });
+        }
+
+        // Sound game functionality
+        function setupSoundGame() {
+            const highlights = document.querySelectorAll('#soundGameText .highlight');
+            highlights.forEach(highlight => {
+                highlight.addEventListener('click', () => {
+                    highlight.style.backgroundColor = '#c6f6d5';
+                    updateScore(2);
+                });
+            });
+        }
+
+        function resetSoundGame() {
+            const highlights = document.querySelectorAll('#soundGameText .highlight');
+            highlights.forEach(highlight => {
+                highlight.style.backgroundColor = 'yellow';
+            });
+        }
+
+        // Practice section functionality
+        let foundItems = 0;
+        const totalItems = 8;
+
+        function setupPracticeClicking() {
+            const clickables = document.querySelectorAll('#practiceText .clickable');
+            clickables.forEach(clickable => {
+                clickable.addEventListener('click', () => {
+                    if (!clickable.classList.contains('clicked') && !clickable.classList.contains('revealed')) {
+                        clickable.classList.add('clicked');
+                        foundItems++;
+                        updateFoundCount();
+                        updateScore(5);
+                        
+                        // Show what type they found
+                        const type = clickable.dataset.type;
+                        const typeNames = {
+                            'vergelyking': 'Vergelyking',
+                            'metafoor': 'Metafoor', 
+                            'personifikasie': 'Personifikasie',
+                            'hiperbool': 'Hiperbool',
+                            'formeel': 'Formele Register',
+                            'informeel': 'Informele Register'
+                        };
+                        
+                        // Show temporary feedback
+                        showTemporaryFeedback(`✓ ${typeNames[type]} gevind! +5 punte`);
+                        
+                        if (foundItems === totalItems) {
+                            setTimeout(() => {
+                                alert('🎉 Baie goed! Jy het alles gevind! Bonus: +20 punte');
+                                updateScore(20);
+                            }, 500);
+                        }
+                    }
+                });
+            });
+        }
+
+        function updateFoundCount() {
+            document.getElementById('foundCount').textContent = foundItems;
+        }
+
+        function showTemporaryFeedback(message) {
+            const feedback = document.createElement('div');
+            feedback.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #48bb78;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                font-weight: bold;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            feedback.textContent = message;
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                feedback.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => feedback.remove(), 300);
+            }, 2000);
+        }
+
+        function highlightAnswers() {
+            const clickables = document.querySelectorAll('#practiceText .clickable');
+            clickables.forEach(clickable => {
+                clickable.classList.add('revealed');
+                if (!clickable.classList.contains('clicked')) {
+                    foundItems++;
+                }
+            });
+            
+            updateFoundCount();
+            updateScore(10);
+            
+            // Add comprehensive legend
+            const practiceContainer = document.querySelector('#practice .mini-text-area');
+            let existingLegend = practiceContainer.querySelector('.answer-legend');
+            if (existingLegend) {
+                existingLegend.remove();
+            }
+            
+            const legend = document.createElement('div');
+            legend.className = 'answer-legend';
+            legend.innerHTML = `
+                <div style='margin: 25px 0; padding: 20px; background: #f7fafc; border-radius: 10px; border: 2px solid #e2e8f0;'>
+                    <h4 style='color: #4a5568; margin-bottom: 15px;'>📋 Volledige Antwoorde:</h4>
+                    <div style='display: grid; gap: 8px;'>
+                        <p><span style='background: #fed7d7; padding: 3px 8px; border-radius: 4px; color: #c53030; font-weight: bold;'>Vergelykings</span>: "borrel soos 'n pot sop" & "hardloop soos 'n windhond"</p>
+                        <p><span style='background: #f0fff4; padding: 3px 8px; border-radius: 4px; color: #38a169; font-weight: bold;'>Metafoor</span>: "Die gang is 'n doolhof"</p>
+                        <p><span style='background: #c6f6d5; padding: 3px 8px; border-radius: 4px; color: #2f855a; font-weight: bold;'>Personifikasie</span>: "skoolklok skree" & "mure fluister"</p>
+                        <p><span style='background: #fef5e7; padding: 3px 8px; border-radius: 4px; color: #d69e2e; font-weight: bold;'>Hiperbool</span>: "'n miljoen dinge"</p>
+                        <p><span style='background: #e6fffa; padding: 3px 8px; border-radius: 4px; color: #319795; font-weight: bold;'>Register</span>: "Geagte Meneer" (formeel) vs "Hey, fam" (informeel)</p>
+                    </div>
+                </div>
+            `;
+            practiceContainer.appendChild(legend);
+        }
+
+        function resetPractice() {
+            foundItems = 0;
+            updateFoundCount();
+            
+            const clickables = document.querySelectorAll('#practiceText .clickable');
+            clickables.forEach(clickable => {
+                clickable.classList.remove('clicked', 'revealed');
+            });
+            
+            const legend = document.querySelector('.answer-legend');
+            if (legend) {
+                legend.remove();
+            }
+        }
+
+        // Initialize the app
+        function initApp() {
+            loadQuestion();
+            setupDragDrop();
+            setupSoundGame();
+            setupPracticeClicking();
+            updateProgress();
+        }
+
+        // Run initialization when page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
